@@ -19,6 +19,9 @@ for(var i=0; i < numItems; i++){
   if(i <= imagesToShow){
     var itemWindow = document.getElementById('itemWindow');
     this['product_'+i] = new Product(imgList[i]);
+    this['item_'+i] = document.createElement("img");
+    this['item_'+i].src = `img/assets/${imgList[i]}`;
+    itemWindow.appendChild(this['item_'+i]);
   }
   else{
     new Product(imgList[i]);
