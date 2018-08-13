@@ -5,6 +5,7 @@ function Product(fileName){
   this.fileName = fileName;
   this.shown = 0;
   this.votes = 0;
+  this.percent = this.votes/this.shown;
   Product.allProducts.push(this);
 }
 
@@ -32,6 +33,7 @@ product3.shown++;
 var img1 = document.getElementsByTagName('img')[0];
 var img2 = document.getElementsByTagName('img')[1];
 var img3 = document.getElementsByTagName('img')[2];
+var itemWindow = document.getElementById('itemWindow');
 
 function getNewProducts(){
   //get three new images to display;
@@ -50,6 +52,11 @@ function getNewProducts(){
   product2 = Product.allProducts[randomIdx2];
   product3 = Product.allProducts[randomIdx3];
 
+  //adding to count of times image has been shown
+  product1.shown++;
+  product2.shown++;
+  product3.shown++;
+
   //re-assigning old indexes to the new ones generated for next iteration reference.
   oldIdx1 = randomIdx1;
   oldIdx2 = randomIdx2;
@@ -61,32 +68,66 @@ function getNewProducts(){
   img3.src = `img/assets/${product3.fileName}`;
 }
 
-//script to run if image 1 clicked
-img1.addEventListener('click', function(){
-  console.log('img1 has been clicked');
-  product1.votes++;
-  count++;
-  getNewProducts();
-  }
-);
+if(count < 25){
+  //script to run if image 1 clicked
+  img1.addEventListener('click', function(){
+    console.log('img1 has been clicked');
+    if(count <= 25){
+      product1.votes++;
+      count++;
+    }
+    if(count === 25){
+      displayResults();
+      itemWindow.style.display = 'none';
+    }else{
+      getNewProducts();
+    }
+    }
+  );
 
-//script to run if image 2 is clicked
-img2.addEventListener('click', function(){
-  console.log('img2 has been clicked');
-  product2.votes++;
-  count++;
-  getNewProducts();
-  }
-);
+  //script to run if image 2 is clicked
+  img2.addEventListener('click', function(){
+    console.log('img2 has been clicked');
+    if(count <= 25){
+      product2.votes++;
+      count++;
+    }
+    if(count === 25){
+      displayResults();
+      itemWindow.style.display = 'none';
+    }else{
+      getNewProducts();
+    }
+    }
+  );
 
-//script to run if image 3 is clicked
-img3.addEventListener('click', function(){
-  console.log('img3 has been clicked');
-  product3.votes++;
-  count++;
-  getNewProducts();
+  //script to run if image 3 is clicked
+  img3.addEventListener('click', function(){
+    console.log('img3 has been clicked');
+    if(count <= 25){
+      product3.votes++;
+      count++;
+    }
+    if(count === 25){
+      displayResults();
+      itemWindow.style.display = 'none';
+    }else{
+      getNewProducts();
+    }
+    }
+  );
+}
+
+//function to add a list of vote values per product.
+function displayResults(){
+  console.log('count has reached 25 votes');
+  for(var i=0; i<Product.allProducts.length; i++){
+    var results = document.getElementById('results');
+    var showResults = document.createElement('li');
+    showResults.innerHTML = `${Product.allProducts[i].votes} votes for the ${Product.allProducts[i].fileName}`
+    results.appendChild(showResults)
   }
-);
+}
 
 
 
