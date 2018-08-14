@@ -7,7 +7,12 @@ function Product(arr) {
   this.shown = 0;
   this.votes = 0;
   this.percent = function () {
-    return Math.round((this.votes / this.shown) * 100) + '%';
+    var percent = Math.round((this.votes / this.shown) * 100);
+    if(percent === NaN){
+      return 0+'%';
+    }else{
+      return  percent+'%';
+    }
   }
   Product.allProducts.push(this);
 }
@@ -42,6 +47,14 @@ var img1 = document.getElementsByTagName('img')[0];
 var img2 = document.getElementsByTagName('img')[1];
 var img3 = document.getElementsByTagName('img')[2];
 var itemWindow = document.getElementById('itemWindow');
+
+//updating count on HTML page
+function updateCounter(){
+  console.log('******');
+  var counter = document.getElementById("count");
+  console.log(count);
+  counter.innerHTML = count;
+}
 
 function getNewProducts() {
   //get three new images to display;
@@ -83,6 +96,7 @@ if (count < 25) {
     if (count <= 25) {
       product1.votes++;
       count++;
+      updateCounter();
     }
     if (count === 25) {
       displayResults();
@@ -99,6 +113,7 @@ if (count < 25) {
     if (count <= 25) {
       product2.votes++;
       count++;
+      updateCounter();
     }
     if (count === 25) {
       displayResults();
@@ -115,6 +130,7 @@ if (count < 25) {
     if (count <= 25) {
       product3.votes++;
       count++;
+      updateCounter();
     }
     if (count === 25) {
       displayResults();
@@ -131,22 +147,23 @@ var color = function(){return Math.floor(Math.random()*255)}
 //function to add a list of vote values per product.
 function displayResults() {
   console.log('count has reached 25 votes');
-  var listWindow = document.getElementsByTagName('div')[1];
+  var listWindow = document.getElementsByTagName('div')[3];
   listWindow.className = 'main';
   for (var i = 0; i < Product.allProducts.length; i++) {
     var rating = Product.allProducts[i].percent();
     var results = document.getElementById('results');
     var showResults = document.createElement('li');
-    showResults.innerHTML = `${Product.allProducts[i].votes} votes for the ${Product.allProducts[i].name}. Rating: ${rating}.`
+    showResults.innerHTML = `${Product.allProducts[i].name}: ${Product.allProducts[i].votes} votes; Rate: ${rating}.`
     results.appendChild(showResults)
   }
 
-  // declaring array variables for use in charts
+  // declaring array variables for use in chart
   var allNames = [];
   var allVotes = [];
   var allShown = [];
   var chartColors = [];
 
+  //assigning data to arrays to use for chart
   for(var i = 0; i < Product.allProducts.length; i++){
     allNames.push(Product.allProducts[i].name);
     allVotes.push(Product.allProducts[i].votes);
@@ -155,7 +172,7 @@ function displayResults() {
   }
   console.log('chart colors: '+chartColors);
   //attempting to add a bar chart
-  var ctx = document.getElementById('donut').getContext('2d');
+  var ctx = document.getElementById('bar').getContext('2d');
   var myDoughnutChart = new Chart(ctx, {
     type: 'bar',
     data: {
