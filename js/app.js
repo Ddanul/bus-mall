@@ -1,18 +1,21 @@
 'use strict';
 console.log('js is linked');
 
-function Product(fileName){
-  this.fileName = fileName;
+function Product(arr){
+  this.fileName = arr[0];
+  this.name = arr[1];
   this.shown = 0;
   this.votes = 0;
-  this.percent = this.votes/this.shown;
+  this.percent = function(){
+    return Math.round((this.votes/this.shown)*100)+'%';
+  }
   Product.allProducts.push(this);
 }
 
 Product.allProducts = [];
 
 //List of image filenames
-var imgList = ['bag.jpg', 'banana.jpg', 'bathroom.jpg', 'boots.jpg', 'breakfast.jpg', 'bubblegum.jpg', 'chair.jpg', 'cthulhu.jpg', 'dog-duck.jpg', 'dragon.jpg', 'pen.jpg', 'pet-sweep.jpg', 'scissors.jpg', 'shark.jpg', 'sweep.png', 'tauntaun.jpg', 'unicorn.jpg', 'usb.gif', 'water-can.jpg', 'wine-glass.jpg' ];
+var imgList = [['bag.jpg','Rolley Bag'], ['banana.jpg', 'Banana Slicer'], ['bathroom.jpg', 'TP Ipad Holder'], ['boots.jpg', 'Toeless Rainboots'], ['breakfast.jpg', 'EZ Bake Breakfast'], ['bubblegum.jpg', 'Meatball Gum'], ['chair.jpg', 'Bumpy Chair'], ['cthulhu.jpg','Octopus-Bat Thing'], ['dog-duck.jpg','Dog Beak Muzzle'], ['dragon.jpg','Dragon Meat'], ['pen.jpg', 'Pen Utensils'], ['pet-sweep.jpg','Doggie Swiffer'], ['scissors.jpg','Pizza Scissors'], ['shark.jpg', 'Shark Pillow'], ['sweep.png','Baby Swiffer'], ['tauntaun.jpg','Horse Thing Sleeping Bag'], ['unicorn.jpg','Unicorn Meat'], ['usb.gif','Tentacle USB'], ['water-can.jpg','Self-Watering Can'], ['wine-glass.jpg','Pointless Wine Glass']];
 
 for(var i=0; i<imgList.length; i++){
   new Product(imgList[i]);
@@ -121,10 +124,12 @@ if(count < 25){
 //function to add a list of vote values per product.
 function displayResults(){
   console.log('count has reached 25 votes');
+  var listWindow = document.getElementsByTagName('div')[1];
+  listWindow.className = 'main';
   for(var i=0; i<Product.allProducts.length; i++){
     var results = document.getElementById('results');
     var showResults = document.createElement('li');
-    showResults.innerHTML = `${Product.allProducts[i].votes} votes for the ${Product.allProducts[i].fileName}`
+    showResults.innerHTML = `${Product.allProducts[i].votes} votes for the ${Product.allProducts[i].name}`
     results.appendChild(showResults)
   }
 }
