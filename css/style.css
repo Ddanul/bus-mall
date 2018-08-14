@@ -2,6 +2,34 @@ body{
     font-family: sans-serif;
 }
 
+.logo{
+    height: 100px;
+    width: 100px;
+    margin: 25px auto;
+    font-size: 3em;
+    font-family: 'Prompt', sans-serif;
+    background-color: red;
+    color: white;
+    line-height: 34px;
+    text-align: center;
+}
+
+.logo1{
+    height: 100px;
+    width: 100px;
+    background-image: url('../img/busMall_logo.png');
+    background-repeat: no-repeat;
+    margin: 25px auto;
+}
+
+p:first-child{
+    padding-top: 15px;
+}
+
+p:nth-child(2){
+    font-size: .98em;
+}
+
 h1{
     font-size: 35px;
     text-align: center;
@@ -9,9 +37,37 @@ h1{
     margin: 25px;
 }
 
+.votes{
+    max-width: 200px;
+    font-size: 25px;
+    font-family: 'Prompt', sans-serif;
+    margin: 10px auto;
+}
+
+.votes h2{
+    display: inline;
+}
+
 img{
     max-width: 300px;
+    max-height: 200px;
     vertical-align: top;
+    border: 3px solid black;
+    margin: 20px;
+    transition: transform .2s;
+}
+
+img:hover{
+    border: 5px solid silver;
+    -ms-transform: scale(1.25); /* IE 9 */
+    -webkit-transform: scale(1.25); /* Safari 3-8 */
+    transform: scale(1.25);
+}
+
+.mainTiles{
+    max-width: fit-content;
+    margin: 0 auto;
+    background-color: whitesmoke;
 }
 
 .main{
@@ -19,4 +75,17 @@ img{
     margin: 0 auto;
     background-color: whitesmoke;
     border: 2px double black;
+}
+
+#results{
+    padding: 20px;
+}
+
+li{
+    padding: 5px;
+}
+
+.chartWindow{
+    max-width: 75%;
+    margin: 50px auto;
 }
