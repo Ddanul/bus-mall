@@ -126,6 +126,8 @@ if (count < 25) {
   );
 }
 
+var color = function(){return Math.floor(Math.random()*255)}
+
 //function to add a list of vote values per product.
 function displayResults() {
   console.log('count has reached 25 votes');
@@ -138,27 +140,39 @@ function displayResults() {
     showResults.innerHTML = `${Product.allProducts[i].votes} votes for the ${Product.allProducts[i].name}. Rating: ${rating}.`
     results.appendChild(showResults)
   }
+
+  // declaring array variables for use in charts
+  var allNames = [];
+  var allVotes = [];
+  var allShown = [];
+  var chartColors = [];
+
+  for(var i = 0; i < Product.allProducts.length; i++){
+    allNames.push(Product.allProducts[i].name);
+    allVotes.push(Product.allProducts[i].votes);
+    allShown.push(Product.allProducts[i].shown);
+    chartColors.push(`rgba(${color()}, ${color()}, ${color()}, 0.8)`);
+  }
+  console.log('chart colors: '+chartColors);
   //attempting to add a bar chart
   var ctx = document.getElementById('donut').getContext('2d');
   var myDoughnutChart = new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+      labels: allNames,
       datasets: [{
         label: '# of Votes',
-        data: [10, 20, 30, 21, 44, 10],
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)'
-        ],
+        data: allVotes,
+        backgroundColor: chartColors,
       }],    
     },
     options: {
       scales: {
+          xAxes: [{
+            ticks: {
+              autoSkip: false
+            },
+          }],
           yAxes: [{
               ticks: {
                   beginAtZero:true
