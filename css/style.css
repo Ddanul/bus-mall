@@ -22,14 +22,6 @@ body{
     margin: 25px auto;
 }
 
-p:first-child{
-    padding-top: 15px;
-}
-
-p:nth-child(2){
-    font-size: .98em;
-}
-
 h1{
     font-size: 35px;
     text-align: center;
@@ -46,6 +38,7 @@ h1{
 
 .votes h2{
     display: inline;
+    text-align: center;
 }
 
 img{
