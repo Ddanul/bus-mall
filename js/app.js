@@ -1,11 +1,11 @@
 'use strict';
 console.log('js is linked');
 
-function Product(arr) {
-  this.fileName = arr[0];
-  this.name = arr[1];
-  this.shown = 0;
-  this.votes = 0;
+function Product(fileName, name, shown = 0, votes = 0) {
+  this.fileName = fileName;
+  this.name = name;
+  this.shown = shown;
+  this.votes = votes;
   this.percent = function () {
     var percent = Math.round((this.votes / this.shown) * 100);
     if(isNaN(percent)){
@@ -22,15 +22,28 @@ Product.allProducts = [];
 //List of image filenames
 var imgList = [['bag.jpg', 'Rolley Bag'], ['banana.jpg', 'Banana Slicer'], ['bathroom.jpg', 'TP Ipad Holder'], ['boots.jpg', 'Toeless Rainboots'], ['breakfast.jpg', 'EZ Bake Breakfast'], ['bubblegum.jpg', 'Meatball Gum'], ['chair.jpg', 'Bumpy Chair'], ['cthulhu.jpg', 'Octopus-Bat Thing'], ['dog-duck.jpg', 'Dog Beak Muzzle'], ['dragon.jpg', 'Dragon Meat'], ['pen.jpg', 'Pen Utensils'], ['pet-sweep.jpg', 'Doggie Swiffer'], ['scissors.jpg', 'Pizza Scissors'], ['shark.jpg', 'Shark Pillow'], ['sweep.png', 'Baby Swiffer'], ['tauntaun.jpg', 'Horse Thing Sleeping Bag'], ['unicorn.jpg', 'Unicorn Meat'], ['usb.gif', 'Tentacle USB'], ['water-can.jpg', 'Self-Watering Can'], ['wine-glass.jpg', 'Pointless Wine Glass']];
 
-for (var i = 0; i < imgList.length; i++) {
-  new Product(imgList[i]);
+//set variable to JSON Products from local storage
+var loadProducts = JSON.parse(localStorage.getItem('products'));
+
+//checks if local storage value set
+  //if set, re-establishes objects as Products
+  //else, it creates new Products
+if(loadProducts){
+  for(var i = 0; i < loadProducts.length; i++){
+   new Product(loadProducts[i].fileName, loadProducts[i].name, loadProducts[i].shown, loadProducts[i].votes);
+  }
+}else{
+  //instantiates new Product objects
+  for (var i = 0; i < imgList.length; i++) {
+    new Product(imgList[i][0], imgList[i][1]);
+  }
 }
+
 
 //storing indexes for reference to avoid repetition
 var oldIdx1 = 0;
 var oldIdx2 = 7;
 var oldIdx3 = 17;
-//var oldIdx = [0, 7, 17];
 
 var count = 0;
 
@@ -54,6 +67,7 @@ function updateCounter(){
   counter.innerHTML = count;
 }
 
+//function to store products into local storage
 function storeProducts() {
 localStorage.setItem("products", JSON.stringify(Product.allProducts));
 }
@@ -175,7 +189,6 @@ function displayResults() {
     allShown.push(Product.allProducts[i].shown);
     chartColors.push(`rgba(${color()}, ${color()}, ${color()}, 0.8)`);
   }
-  console.log('chart colors: '+chartColors);
   //attempting to add a bar chart
   var ctx = document.getElementById('bar').getContext('2d');
   new Chart(ctx, {
