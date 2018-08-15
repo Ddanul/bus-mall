@@ -8,12 +8,12 @@ function Product(arr) {
   this.votes = 0;
   this.percent = function () {
     var percent = Math.round((this.votes / this.shown) * 100);
-    if(percent === NaN){
-      return 0+'%';
-    }else{
-      return  percent+'%';
+    if (isNaN(percent)) {
+      return 0 + '%';
+    } else {
+      return percent + '%';
     }
-  }
+  };
   Product.allProducts.push(this);
 }
 
@@ -49,10 +49,8 @@ var img3 = document.getElementsByTagName('img')[2];
 var itemWindow = document.getElementById('itemWindow');
 
 //updating count on HTML page
-function updateCounter(){
-  console.log('******');
-  var counter = document.getElementById("count");
-  console.log(count);
+function updateCounter() {
+  var counter = document.getElementById('count');
   counter.innerHTML = count;
 }
 
@@ -142,7 +140,7 @@ if (count < 25) {
   );
 }
 
-var color = function(){return Math.floor(Math.random()*255)}
+var color = function () { return Math.floor(Math.random() * 255); };
 
 //function to add a list of vote values per product.
 function displayResults() {
@@ -153,8 +151,8 @@ function displayResults() {
     var rating = Product.allProducts[i].percent();
     var results = document.getElementById('results');
     var showResults = document.createElement('li');
-    showResults.innerHTML = `${Product.allProducts[i].name}: ${Product.allProducts[i].votes} votes; Rate: ${rating}.`
-    results.appendChild(showResults)
+    showResults.innerHTML = `${Product.allProducts[i].name}: ${Product.allProducts[i].votes} votes; Rate: ${rating}.`;
+    results.appendChild(showResults);
   }
 
   // declaring array variables for use in chart
@@ -164,16 +162,16 @@ function displayResults() {
   var chartColors = [];
 
   //assigning data to arrays to use for chart
-  for(var i = 0; i < Product.allProducts.length; i++){
-    allNames.push(Product.allProducts[i].name);
-    allVotes.push(Product.allProducts[i].votes);
-    allShown.push(Product.allProducts[i].shown);
+  for (var j = 0; j < Product.allProducts.length; j++) {
+    allNames.push(Product.allProducts[j].name);
+    allVotes.push(Product.allProducts[j].votes);
+    allShown.push(Product.allProducts[j].shown);
     chartColors.push(`rgba(${color()}, ${color()}, ${color()}, 0.8)`);
   }
-  console.log('chart colors: '+chartColors);
+  console.log('chart colors: ' + chartColors);
   //attempting to add a bar chart
   var ctx = document.getElementById('bar').getContext('2d');
-  var myDoughnutChart = new Chart(ctx, {
+  new Chart(ctx, {
     type: 'bar',
     data: {
       labels: allNames,
@@ -181,20 +179,20 @@ function displayResults() {
         label: '# of Votes',
         data: allVotes,
         backgroundColor: chartColors,
-      }],    
+      }],
     },
     options: {
       scales: {
-          xAxes: [{
-            ticks: {
-              autoSkip: false
-            },
-          }],
-          yAxes: [{
-              ticks: {
-                  beginAtZero:true
-              }
-          }]
+        xAxes: [{
+          ticks: {
+            autoSkip: false
+          },
+        }],
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
       }
     }
   });
