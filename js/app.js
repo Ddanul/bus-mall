@@ -8,7 +8,7 @@ function Product(arr) {
   this.votes = 0;
   this.percent = function () {
     var percent = Math.round((this.votes / this.shown) * 100);
-    if(percent === NaN){
+    if(isNaN(percent)){
       return 0+'%';
     }else{
       return  percent+'%';
@@ -34,13 +34,12 @@ var oldIdx3 = 17;
 
 var count = 0;
 
+// var products = JSON.parse(localStorage.getItem('products'));
+
 //declaring variables for first three products to display in HTML
 var product1 = Product.allProducts[0];
-// product1.shown++;
 var product2 = Product.allProducts[7];
-// product2.shown++;
 var product3 = Product.allProducts[17];
-// product3.shown++;
 
 //grabbing the image elements in HTML to change image later
 var img1 = document.getElementsByTagName('img')[0];
@@ -50,10 +49,13 @@ var itemWindow = document.getElementById('itemWindow');
 
 //updating count on HTML page
 function updateCounter(){
-  console.log('******');
   var counter = document.getElementById("count");
   console.log(count);
   counter.innerHTML = count;
+}
+
+function storeProducts() {
+localStorage.setItem("products", JSON.stringify(Product.allProducts));
 }
 
 function getNewProducts() {
@@ -101,6 +103,7 @@ if (count < 25) {
     if (count === 25) {
       displayResults();
       itemWindow.style.display = 'none';
+      storeProducts();
     } else {
       getNewProducts();
     }
@@ -118,6 +121,7 @@ if (count < 25) {
     if (count === 25) {
       displayResults();
       itemWindow.style.display = 'none';
+      storeProducts();
     } else {
       getNewProducts();
     }
@@ -135,6 +139,7 @@ if (count < 25) {
     if (count === 25) {
       displayResults();
       itemWindow.style.display = 'none';
+      storeProducts();
     } else {
       getNewProducts();
     }
@@ -173,7 +178,7 @@ function displayResults() {
   console.log('chart colors: '+chartColors);
   //attempting to add a bar chart
   var ctx = document.getElementById('bar').getContext('2d');
-  var myDoughnutChart = new Chart(ctx, {
+  new Chart(ctx, {
     type: 'bar',
     data: {
       labels: allNames,
