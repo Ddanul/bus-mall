@@ -11,9 +11,9 @@ function Product(fileName, name, shown = 0, votes = 0) {
     if(isNaN(percent)){
       return 0+'%';
     }else{
-      return  percent+'%';
+      return percent+'%';
     }
-  }
+  };
   Product.allProducts.push(this);
 }
 
@@ -26,16 +26,16 @@ var imgList = [['bag.jpg', 'Rolley Bag'], ['banana.jpg', 'Banana Slicer'], ['bat
 var loadProducts = JSON.parse(localStorage.getItem('products'));
 
 //checks if local storage value set
-  //if set, re-establishes objects as Products
-  //else, it creates new Products
+//if set, re-establishes objects as Products
+//else, it creates new Products
 if(loadProducts){
   for(var i = 0; i < loadProducts.length; i++){
-   new Product(loadProducts[i].fileName, loadProducts[i].name, loadProducts[i].shown, loadProducts[i].votes);
+    new Product(loadProducts[i].fileName, loadProducts[i].name, loadProducts[i].shown, loadProducts[i].votes);
   }
 }else{
   //instantiates new Product objects
-  for (var i = 0; i < imgList.length; i++) {
-    new Product(imgList[i][0], imgList[i][1]);
+  for (var j = 0; j < imgList.length; j++) {
+    new Product(imgList[j][0], imgList[j][1]);
   }
 }
 
@@ -62,14 +62,14 @@ var itemWindow = document.getElementById('itemWindow');
 
 //updating count on HTML page
 function updateCounter(){
-  var counter = document.getElementById("count");
+  var counter = document.getElementById('count');
   console.log(count);
   counter.innerHTML = count;
 }
 
 //function to store products into local storage
 function storeProducts() {
-localStorage.setItem("products", JSON.stringify(Product.allProducts));
+  localStorage.setItem('products', JSON.stringify(Product.allProducts));
 }
 
 function getNewProducts() {
@@ -161,7 +161,7 @@ if (count < 25) {
   );
 }
 
-var color = function(){return Math.floor(Math.random()*255)}
+var color = function(){return Math.floor(Math.random()*255);};
 
 //function to add a list of vote values per product.
 function displayResults() {
@@ -172,8 +172,8 @@ function displayResults() {
     var rating = Product.allProducts[i].percent();
     var results = document.getElementById('results');
     var showResults = document.createElement('li');
-    showResults.innerHTML = `${Product.allProducts[i].name}: ${Product.allProducts[i].votes} votes; Rate: ${rating}.`
-    results.appendChild(showResults)
+    showResults.innerHTML = `${Product.allProducts[i].name}: ${Product.allProducts[i].votes} votes; Rate: ${rating}.`;
+    results.appendChild(showResults);
   }
 
   // declaring array variables for use in chart
@@ -183,10 +183,10 @@ function displayResults() {
   var chartColors = [];
 
   //assigning data to arrays to use for chart
-  for(var i = 0; i < Product.allProducts.length; i++){
-    allNames.push(Product.allProducts[i].name);
-    allVotes.push(Product.allProducts[i].votes);
-    allShown.push(Product.allProducts[i].shown);
+  for(var x = 0; x < Product.allProducts.length; x++){
+    allNames.push(Product.allProducts[x].name);
+    allVotes.push(Product.allProducts[x].votes);
+    allShown.push(Product.allProducts[x].shown);
     chartColors.push(`rgba(${color()}, ${color()}, ${color()}, 0.8)`);
   }
   //attempting to add a bar chart
@@ -199,20 +199,20 @@ function displayResults() {
         label: '# of Votes',
         data: allVotes,
         backgroundColor: chartColors,
-      }],    
+      }],
     },
     options: {
       scales: {
-          xAxes: [{
-            ticks: {
-              autoSkip: false
-            },
-          }],
-          yAxes: [{
-              ticks: {
-                  beginAtZero:true
-              }
-          }]
+        xAxes: [{
+          ticks: {
+            autoSkip: false
+          },
+        }],
+        yAxes: [{
+          ticks: {
+            beginAtZero:true
+          }
+        }]
       }
     }
   });
