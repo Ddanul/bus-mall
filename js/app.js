@@ -1,23 +1,23 @@
 'use strict';
 console.log('js is linked');
 
-function Product(arr){
+function Product(arr) {
   this.fileName = arr[0];
   this.name = arr[1];
   this.shown = 0;
   this.votes = 0;
-  this.percent = function(){
-    return Math.round((this.votes/this.shown)*100)+'%';
-  }
+  this.percent = function () {
+    return Math.round((this.votes / this.shown) * 100) + '%';
+  };
   Product.allProducts.push(this);
 }
 
 Product.allProducts = [];
 
 //List of image filenames
-var imgList = [['bag.jpg','Rolley Bag'], ['banana.jpg', 'Banana Slicer'], ['bathroom.jpg', 'TP Ipad Holder'], ['boots.jpg', 'Toeless Rainboots'], ['breakfast.jpg', 'EZ Bake Breakfast'], ['bubblegum.jpg', 'Meatball Gum'], ['chair.jpg', 'Bumpy Chair'], ['cthulhu.jpg','Octopus-Bat Thing'], ['dog-duck.jpg','Dog Beak Muzzle'], ['dragon.jpg','Dragon Meat'], ['pen.jpg', 'Pen Utensils'], ['pet-sweep.jpg','Doggie Swiffer'], ['scissors.jpg','Pizza Scissors'], ['shark.jpg', 'Shark Pillow'], ['sweep.png','Baby Swiffer'], ['tauntaun.jpg','Horse Thing Sleeping Bag'], ['unicorn.jpg','Unicorn Meat'], ['usb.gif','Tentacle USB'], ['water-can.jpg','Self-Watering Can'], ['wine-glass.jpg','Pointless Wine Glass']];
+var imgList = [['bag.jpg', 'Rolley Bag'], ['banana.jpg', 'Banana Slicer'], ['bathroom.jpg', 'TP Ipad Holder'], ['boots.jpg', 'Toeless Rainboots'], ['breakfast.jpg', 'EZ Bake Breakfast'], ['bubblegum.jpg', 'Meatball Gum'], ['chair.jpg', 'Bumpy Chair'], ['cthulhu.jpg', 'Octopus-Bat Thing'], ['dog-duck.jpg', 'Dog Beak Muzzle'], ['dragon.jpg', 'Dragon Meat'], ['pen.jpg', 'Pen Utensils'], ['pet-sweep.jpg', 'Doggie Swiffer'], ['scissors.jpg', 'Pizza Scissors'], ['shark.jpg', 'Shark Pillow'], ['sweep.png', 'Baby Swiffer'], ['tauntaun.jpg', 'Horse Thing Sleeping Bag'], ['unicorn.jpg', 'Unicorn Meat'], ['usb.gif', 'Tentacle USB'], ['water-can.jpg', 'Self-Watering Can'], ['wine-glass.jpg', 'Pointless Wine Glass']];
 
-for(var i=0; i<imgList.length; i++){
+for (var i = 0; i < imgList.length; i++) {
   new Product(imgList[i]);
 }
 
@@ -38,16 +38,16 @@ var img2 = document.getElementsByTagName('img')[1];
 var img3 = document.getElementsByTagName('img')[2];
 var itemWindow = document.getElementById('itemWindow');
 
-function getNewProducts(){
+function getNewProducts() {
   //get three new images to display;
-  do{
-    var randomIdx1 = Math.floor(Math.random()*imgList.length);
+  do {
+    var randomIdx1 = Math.floor(Math.random() * imgList.length);
   } while (randomIdx1 === oldIdx1 || randomIdx1 === oldIdx2 || randomIdx1 === oldIdx3);
-  do{
-    var randomIdx2 = Math.floor(Math.random()*imgList.length);
+  do {
+    var randomIdx2 = Math.floor(Math.random() * imgList.length);
   } while (randomIdx2 === oldIdx1 || randomIdx2 === oldIdx2 || randomIdx2 === oldIdx3 || randomIdx2 === randomIdx1);
-  do{
-    var randomIdx3 = Math.floor(Math.random()*imgList.length);
+  do {
+    var randomIdx3 = Math.floor(Math.random() * imgList.length);
   } while (randomIdx3 === oldIdx1 || randomIdx3 === oldIdx2 || randomIdx3 === oldIdx3 || randomIdx3 === randomIdx1 || randomIdx3 === randomIdx2);
 
   //grab objects from array based on random indexs generated.
@@ -71,66 +71,66 @@ function getNewProducts(){
   img3.src = `img/assets/${product3.fileName}`;
 }
 
-if(count < 25){
+if (count < 25) {
   //script to run if image 1 clicked
-  img1.addEventListener('click', function(){
+  img1.addEventListener('click', function () {
     console.log('img1 has been clicked');
-    if(count <= 25){
+    if (count <= 25) {
       product1.votes++;
       count++;
     }
-    if(count === 25){
+    if (count === 25) {
       displayResults();
       itemWindow.style.display = 'none';
-    }else{
+    } else {
       getNewProducts();
     }
-    }
+  }
   );
 
   //script to run if image 2 is clicked
-  img2.addEventListener('click', function(){
+  img2.addEventListener('click', function () {
     console.log('img2 has been clicked');
-    if(count <= 25){
+    if (count <= 25) {
       product2.votes++;
       count++;
     }
-    if(count === 25){
+    if (count === 25) {
       displayResults();
       itemWindow.style.display = 'none';
-    }else{
+    } else {
       getNewProducts();
     }
-    }
+  }
   );
 
   //script to run if image 3 is clicked
-  img3.addEventListener('click', function(){
+  img3.addEventListener('click', function () {
     console.log('img3 has been clicked');
-    if(count <= 25){
+    if (count <= 25) {
       product3.votes++;
       count++;
     }
-    if(count === 25){
+    if (count === 25) {
       displayResults();
       itemWindow.style.display = 'none';
-    }else{
+    } else {
       getNewProducts();
     }
-    }
+  }
   );
 }
 
 //function to add a list of vote values per product.
-function displayResults(){
+function displayResults() {
   console.log('count has reached 25 votes');
   var listWindow = document.getElementsByTagName('div')[1];
   listWindow.className = 'main';
-  for(var i=0; i<Product.allProducts.length; i++){
+  for (var i = 0; i < Product.allProducts.length; i++) {
     var results = document.getElementById('results');
     var showResults = document.createElement('li');
-    showResults.innerHTML = `${Product.allProducts[i].votes} votes for the ${Product.allProducts[i].name}`
-    results.appendChild(showResults)
+    showResults.innerHTML = `${Product.allProducts[i].votes} votes for the ${Product.allProducts[i].name}`;
+    results.appendChild(showResults);
   }
 }
 
